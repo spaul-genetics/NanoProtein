@@ -9,14 +9,13 @@
 #' @description
 #' Creates a S3 object of all the information about target features and samples. This object is used for the other functions in this package. An item on this object can be access as slot(nano_obj, item_name)
 #'
-#' @export creaet_nano_obj
+#' @export create_nano_obj
 #'
 
 
 
 
 create_nano_obj<-function(sample.data, id.data, count.data, row.data){
-  setClass("nano", slots =list(sample = 'data.frame', id = 'data.frame', count = 'matrix', rows = 'data.frame', count_norm = 'list'))
   if(!all.equal(colnames(count.data),rownames(id.data))){
     stop('The column names of count.data and rownames of id.data do not match.')
   }
