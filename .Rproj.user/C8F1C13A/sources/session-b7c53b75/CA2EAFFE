@@ -1,26 +1,26 @@
 {
-    "id": "27045B2C",
-    "path": "~/Documents/NanoProtein/R/hello.R",
-    "project_path": "R/hello.R",
+    "id": "CA2EAFFE",
+    "path": "~/Documents/NCBR-342/nanostring_functions.R",
+    "project_path": null,
     "type": "r_source",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1679430672634.0,
+    "created": 1679430886711.0,
     "source_on_save": false,
-    "relative_order": 1,
+    "relative_order": 2,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "18,0",
-        "scrollLine": "0"
+        "cursorPosition": "45,1",
+        "scrollLine": "19"
     },
     "folds": "",
-    "lastKnownWriteTime": 1679430667,
+    "lastKnownWriteTime": 1679420100,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1679430667,
+    "last_content_update": 1679420100,
     "read_only": false,
     "read_only_alternatives": []
 }

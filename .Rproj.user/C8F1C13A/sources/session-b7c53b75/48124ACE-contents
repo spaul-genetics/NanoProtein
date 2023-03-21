@@ -1,0 +1,13 @@
+#' Creates a barplot of log2 geometric mean
+#' 
+#' @param name description
+
+
+
+qc_bar_plot<-function(nano_obj, filter_by, filter_for, annot_by){
+  plot_data = data.frame(Log2GeoMean = colMeans(log2(nano_obj@count[grepl(filter_for, nano_obj@rows[[filter_by]]),])))
+  plot_data$annot = unlist(nano_obj@id[[annot_by]])
+  plot_data = plot_data[order(plot_data$Log2GeoMean),]
+  ggplot(data = plot_data, aes(x = 1:nrow(plot_data),y = Log2GeoMean, fill = annot))+geom_bar(stat = 'identity')+
+    theme_classic()  
+}

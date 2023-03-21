@@ -1,0 +1,91 @@
+library(readxl)
+library(GGally)
+source('nanostring_functions.R')
+library(ggplot2)
+
+# Build nanostring object
+
+excel_data = '~/Documents/NCBR-342/data/Initial_Dataset.xlsx'
+main.data = readxl::read_excel(excel_data)
+sample.data = readxl::read_excel(excel_data, n_max = 16)
+
+count.data = readxl::read_excel(excel_data, skip = 21)
+row.data = count.data[,1:4]
+names(row.data)<-gsub(' ', '_',gsub('#','',names(row.data)))
+row.data = row.data%>%tibble::column_to_rownames('Target_name_(display_name)')
+
+count.data = count.data[,-c(1:3)]
+sample.data = sample.data[,-c(2:4)]
+names(sample.data) = gsub(' ','_', gsub(' \\| ', '-', names(sample.data)))
+sample.data = sample.data%>%tibble::column_to_rownames('Segment_display_name')
+names(count.data)[1]<-'Transcript'
+count.data = count.data%>%tibble::column_to_rownames('Transcript')
+names(count.data) <- names(sample.data)
+
+
+
+id.data = readxl::read_excel(excel_data, skip = 17, n_max = 3)
+columns<-id.data[,1]
+id.data = id.data[,-c(2:4)]
+id.data = data.frame(t(id.data)[-1,])
+rownames(id.data)<-names(sample.data)
+names(id.data) = unlist(columns)
+
+id.data$Condition = ifelse(id.data$Scan_ID=='OM_P1_S1', 'Norm Rhesus', 
+                           ifelse(id.data$Scan_ID=='OM_P1_S2', 'WMV Rhesus',
+                                  ifelse(id.data$Scan_ID=='OM_P1_S3', 'Norm Human','WMV Human')))
+
+split_condition = data.frame(stringr::str_split(id.data$Condition, ' ',simplify = T))
+names(split_condition) = c('Status','Organism')
+
+id.data = cbind(id.data, split_condition)
+
+
+create_nano_obj<-function(sample.data, id.data, count.data, row.data){
+  setClass("nano", slots =list(sample = 'data.frame', id = 'data.frame', count = 'matrix', rows = 'data.frame', count_norm = 'list'))
+  nano_obj = new('nano', sample = sample.data, id = id.data, count = as.matrix(count.data), rows = row.data)
+  return(nano_obj)
+}
+
+
+nano_obj = create_nano_obj(sample.data = sample.data, id.data = id.data, count.data = count.data, row.data = row.data)
+saveRDS(nano_obj, file = './data/initial_dataset_S3.rds')
+nano_obj_human = subset_nano_obj(nano_obj = nano_obj, filter_by = 'id', filter_str = "Organism=='Human'")
+nano_obj_rhesus = subset_nano_obj(nano_obj = nano_obj, filter_by = 'id', filter_str = "Organism=='Rhesus'")
+
+
+
+hist_data = colMeans(log2(nano_obj@count[grep('IgG',rownames(nano_obj@count), value = T),]))
+hist(hist_data)
+
+qc_bar_plot(nano_obj, filter_by = 'CodeClass', filter_for = 'Endogenous', annot_by = 'Condition')
+qc_bar_plot(nano_obj, filter_by = 'CodeClass', filter_for = 'Control', annot_by = 'Condition')
+qc_bar_plot(nano_obj, filter_by = 'Target_Group', filter_for = 'Background', annot_by = 'Condition')
+qc_bar_plot(nano_obj, filter_by = 'Target_Group', filter_for = 'Housekeeping', annot_by = 'Condition')
+qc_bar_plot(nano_obj = nano_obj_human, filter_by = 'CodeClass', filter_for = 'Endogenous', annot_by = 'Condition')
+qc_bar_plot(nano_obj = nano_obj_rhesus, filter_by = 'CodeClass', filter_for = 'Endogenous', annot_by = 'Condition')
+
+
+
+qc_scatter(nano_obj = nano_obj, shape_by = 'Organism', color_by = 'Status')
+
+qc_scatter(nano_obj = nano_obj_human, shape_by = 'Organism', color_by = 'Status')
+
+
+
+
+qc_pairs(nano_obj = nano_obj, target = 'Housekeeping', shape_by = 'Status', color_by = 'Organism')
+qc_pairs(nano_obj = nano_obj, target = 'Background', shape_by = 'Status', color_by = 'Organism')
+
+qc_pairs(nano_obj = nano_obj, target = 'Housekeeping', shape_by = 'Organism', color_by = 'Status')
+qc_pairs(nano_obj = nano_obj, target = 'Background', shape_by = 'Organism', color_by = 'Status')
+
+
+qc_scatter_overall(nano_obj = nano_obj, color_by = 'Organism')
+qc_scatter_overall(nano_obj = nano_obj, color_by = 'Status')
+qc_scatter_overall(nano_obj = nano_obj, color_by = 'Organism', shape_by = 'Status')
+
+qc_scatter_overall(nano_obj = nano_obj_human, color_by = 'Status')
+qc_scatter_overall(nano_obj = nano_obj_rhesus, color_by = 'Status')
+
+
