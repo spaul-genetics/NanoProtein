@@ -7,11 +7,11 @@
 pca_plot(
   nano_obj,
   slot_id = "count",
-  array_name = NA,
+  array_name = NULL,
   features = "Endogenous",
   x_index = 1,
   y_index = 2,
-  color_by = NA
+  color_by = NULL
 )
 }
 \arguments{

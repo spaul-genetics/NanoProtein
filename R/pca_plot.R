@@ -10,7 +10,7 @@
 #'
 #' @export pca_plot
 
-pca_plot<-function(nano_obj, slot_id = 'count', array_name = NA, features = 'Endogenous',x_index = 1, y_index = 2, color_by = NA){
+pca_plot<-function(nano_obj, slot_id = 'count', array_name = NULL, features = 'Endogenous',x_index = 1, y_index = 2, color_by = NULL){
   xaxis = paste0('PC', x_index)
   yaxis = paste0('PC', y_index)
 
@@ -18,7 +18,7 @@ pca_plot<-function(nano_obj, slot_id = 'count', array_name = NA, features = 'End
     features = rownames(nano_obj@rows)[nano_obj@rows$CodeClass==features]
   }
 
-  if(is.na(array_name)){
+  if(is.null(array_name)){
     x_mat = t(slot(nano_obj, slot_id)[features,])
   }else{
     x_mat = t(slot(nano_obj, slot_id)[[array_name]][features,])
@@ -28,14 +28,14 @@ pca_plot<-function(nano_obj, slot_id = 'count', array_name = NA, features = 'End
   prin_comp = prcomp(x_mat, scale = T, center = T)
   components <- prin_comp[['x']]
   components <- data.frame(components)
-  if(!is.na(color_by)){
+  if(!is.null(color_by)){
     components <- cbind(components, nano_obj@id)
   }
 
   pov = 100*prin_comp$sdev^2/sum(prin_comp$sdev^2)
   xlab = paste0(xaxis, ' (', round(pov[x_index]),'%)')
   ylab = paste0(yaxis, ' (', round(pov[y_index]),'%)')
-  if(is.na(color_by)){
+  if(is.null(color_by)){
     fig = ggplot(data = components, aes(x = !!sym(xaxis), y = !!sym(yaxis)))+geom_point()+theme_bw()+
       labs(x = xlab, y = ylab)
   }else{

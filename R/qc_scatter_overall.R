@@ -8,7 +8,7 @@
 #'
 #' @export qc_scatter_overall
 
-qc_scatter_overall<-function(nano_obj, Area = 'AOI surface area', Nuclei_column = 'AOI nuclei count', color_by = 'Organism', shape_by = NA){
+qc_scatter_overall<-function(nano_obj, Area = 'AOI surface area', Nuclei = 'AOI nuclei count', color_by = 'Organism', shape_by = NA){
   plot_data = data.frame(
     IgG_geomean = exp(colMeans(log(nano_obj@count[grepl('IgG',rownames(nano_obj@count)),]))),
     HK_geomean = exp(colMeans(log(nano_obj@count[grepl('Housekeeping', nano_obj@rows$Target_Group),]))),

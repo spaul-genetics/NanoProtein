@@ -7,7 +7,7 @@
 #' @param filter_for String to look for in the filter_by column. Any feature (RNA/Protein) with filter_for string on the filter_by column of the rows.data will be used.
 #' @param annot_by Column on the id.data to use for annotation
 #'
-#'
+#' @import ggplot2
 #' @export qc_bar_plot
 
 

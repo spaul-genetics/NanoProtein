@@ -3,7 +3,7 @@
 #' @author Subrata Paul
 #'
 #'
-#' @export nano
+#' @exportClass nano
 
 
 nano <- setClass("nano",

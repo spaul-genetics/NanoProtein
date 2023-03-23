@@ -8,6 +8,7 @@
 #' @param color_by Column in the id data to be used for coloring the points
 #' @param shape_by Column in the id data to determine the shape of the points. By default no shape is used.
 #'
+#' @import GGally
 #' @export qc_pairs
 
 
@@ -17,11 +18,11 @@ qc_pairs<-function(nano_obj, target, category_col = 'Target_Group', color_by, sh
     stop('The category column was not found in the row data.')
   }
 
-  if(sum(grepl(target, nano_obj@rows[category_col]))<2){
+  if(sum(grepl(target, nano_obj@rows[[category_col]]))<2){
     stop('Target string was found less than twice in the category column')
   }
 
-  plot_data = data.frame(t(nano_obj@count[grepl(target, nano_obj@rows[category_col]),]))
+  plot_data = data.frame(t(nano_obj@count[grepl(target, nano_obj@rows[[category_col]]),]))
   if(!is.na(shape_by)){
     plot_data = cbind(plot_data, data.frame(Color = nano_obj@id[[color_by]], Shape = nano_obj@id[[shape_by]]))
     names(plot_data)[names(plot_data)=='Shape']<-shape_by

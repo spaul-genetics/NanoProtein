@@ -32,7 +32,7 @@ signal_to_bg_ratio<-function(nano_obj, neg_controls = NULL){
     ordered_cols = c(neg_controls, setdiff(ordered_cols, neg_controls))
   }
 
-  plot_data = reshape2::melt(plot_data)
+  plot_data = suppressMessages(reshape2::melt(plot_data))
   plot_data$variable = factor(plot_data$variable, levels = ordered_cols)
   fig = ggplot(data = plot_data,
                aes(x = variable, y = log2(value)))+

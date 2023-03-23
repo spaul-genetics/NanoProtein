@@ -7,7 +7,7 @@
 qc_scatter_overall(
   nano_obj,
   Area = "AOI surface area",
-  Nuclei_column = "AOI nuclei count",
+  Nuclei = "AOI nuclei count",
   color_by = "Organism",
   shape_by = NA
 )
@@ -17,11 +17,11 @@ qc_scatter_overall(
 
 \item{Area}{Rowname of the sample data that contains Area of the ROI}
 
+\item{Nuclei}{Row of the sample data for AOI nuclei count}
+
 \item{color_by}{Column of id data for coloring the points}
 
 \item{shape_by}{Optional. Column of id data for point shape}
-
-\item{Nuclei}{Row of the sample data for AOI nuclei count}
 }
 \description{
 Scatter plot with area and neucli count
