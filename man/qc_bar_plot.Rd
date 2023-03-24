@@ -4,7 +4,7 @@
 \alias{qc_bar_plot}
 \title{Creates a barplot of log2 geometric mean}
 \usage{
-qc_bar_plot(nano_obj, filter_by, filter_for, annot_by)
+qc_bar_plot(nano_obj, filter_by, filter_for, annot_by, individual_features = F)
 }
 \arguments{
 \item{nano_obj}{The nano object to plot}
@@ -14,6 +14,8 @@ qc_bar_plot(nano_obj, filter_by, filter_for, annot_by)
 \item{filter_for}{String to look for in the filter_by column. Any feature (RNA/Protein) with filter_for string on the filter_by column of the rows.data will be used.}
 
 \item{annot_by}{Column on the id.data to use for annotation}
+
+\item{individual_features}{Boolean. If TRUE it will plot a combined figure (geometric mean of all the feature of interste) and log2 count of each feature.}
 }
 \description{
 Creates a barplot of log2 geometric mean
