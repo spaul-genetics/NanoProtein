@@ -4,7 +4,7 @@
 \alias{qc_scatter_between}
 \title{Scatter Plot of Housekeeping and Background}
 \usage{
-qc_scatter_between(nano_obj, color_by, shape_by = NA)
+qc_scatter_between(nano_obj, color_by, shape_by = NULL, individual = F)
 }
 \arguments{
 \item{nano_obj}{A nano object to plot}
@@ -12,6 +12,8 @@ qc_scatter_between(nano_obj, color_by, shape_by = NA)
 \item{color_by}{Column name os id data to be used to color the points}
 
 \item{shape_by}{Column name of id data to be used to identify the points}
+
+\item{individual}{Boolean. If true a grid of scatter plot for each pair of background and housekeeping proteins will be produced}
 }
 \description{
 Scatter Plot of Housekeeping and Background

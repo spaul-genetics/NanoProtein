@@ -9,7 +9,7 @@ normalize_nano(nano_obj, method = "bghk", out_name = NA, used_igg, used_hk)
 \arguments{
 \item{nano_obj}{A nano object}
 
-\item{method}{Normalization method. One of hghk, posonly, 'Endogenous'}
+\item{method}{Normalization method. One of hghk, posonly, 'Endogenous', or 'hk'}
 
 \item{out_name}{The array name where the normalized count will be saved within the count_norm slot of nano object}
 
@@ -21,4 +21,6 @@ normalize_nano(nano_obj, method = "bghk", out_name = NA, used_igg, used_hk)
 The count data is first normalized by the Positive CodeClass. The normalization factor is calculated as mean of positive (spike-in protein) over all ORI divided by the the count on each ROI
 If method='posonly' no further scalling is performed. For 'bghk' method geometric mean of backgrounds are subtracted and scaled by the normalization factors calculated using the 'used_hk' genes.
 In method = 'Endogenous', after scalling by positive spike-in, normalization factor based on all endogenous genes/proteins is used to scale the counts.
+If method = 'hk' scale factor is calculated based on the housekeeping proteins
+If method = 'all' all available method will be used
 }

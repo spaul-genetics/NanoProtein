@@ -10,7 +10,8 @@ qc_line_plot(
   shadow = "Endogenous",
   target_group_col = "Target_Group",
   split_by = NULL,
-  interactive = F
+  interactive = F,
+  order_by = "GeoMean"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ qc_line_plot(
 \item{split_by}{Split by any column of id data.}
 
 \item{interactive}{If TRUE returns a plotly graph.}
+
+\item{order_by}{How the ROIs are ordered. Default is geometric mean 'GeoMean' if target contains more than one elements. Possible value is a background IgG protein or a housekeeping protein}
 }
 \description{
 Line Plot of the counts
